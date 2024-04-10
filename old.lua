@@ -449,18 +449,8 @@ if isfile("plsdonatesettings.txt") then
 		getgenv().settings = game:GetService('HttpService'):JSONDecode(readfile('plsdonatesettings.txt'))
 	end)
 	if er ~= nil then
-		task.spawn(function()
-			errMsg = Instance.new("Hint")
-			errMsg.Parent = game:GetService('CoreGui')
-			errMsg.Text = tostring("COULDNT LOAD SETTINGS BECAUSE OF DUMBASS JSON ERROR, SERVERHOPPING")
-			task.wait(15)
-			errMsg:Destroy()
-		end)
-		delfile("plsdonatesettings.txt")
-		task.wait(2)
-		getgenv().settings = game:GetService('HttpService'):JSONDecode(readfile('plsdonatesettingsbackup.txt'))
-		saveSettings()
-		forceServerHop()
+		
+		writefile('plsdonatesettingsbackup.txt', httpservice:JSONEncode(getgenv().settings))
 		return
 	else
 		writefile('plsdonatesettingsbackup.txt', httpservice:JSONEncode(getgenv().settings))
